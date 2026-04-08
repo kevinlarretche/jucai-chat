@@ -6,15 +6,15 @@
 <title id="page-title">Juçaí Support Chat</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-  /* --- Juçaí Brand Variables --- */
   :root {
-    --primary-brand: #602750;       /* Juçaí Berry Purple */
+    --primary-brand: #602750;
     --primary-hover: #4A1D3D;
-    --brand-beige: #F5F2ED;         /* Signature Organic Beige Background */
-    --brand-cream: #FFFFFF;         
-    --dark-text: #2C1826;           
+    --brand-bg: #FFFFFF;            /* Clean white background from website */
+    --brand-cream: #FFFFFF;
+    --bubble-bot: #F7F5F2;          /* Soft contrast for bot messages */
+    --dark-text: #2C1826;
     --medium-text: #8E7C88;
-    --border-soft: rgba(96, 39, 80, 0.1);
+    --border-soft: rgba(96, 39, 80, 0.15);
     --success-green: #2ECC71;
   }
 
@@ -22,7 +22,7 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--brand-beige); 
+    background-color: var(--brand-bg); 
     color: var(--dark-text);
     display: flex;
     flex-direction: column;
@@ -30,7 +30,6 @@
     overflow: hidden;
   }
 
-  /* --- Header --- */
   .header {
     background: var(--brand-cream);
     border-bottom: 1px solid var(--border-soft);
@@ -39,34 +38,16 @@
     align-items: center;
     justify-content: space-between;
     z-index: 10;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.02);
   }
 
   .header-left { display: flex; align-items: center; gap: 12px; }
+  .logo-container { width: 48px; height: 48px; }
+  .header-title { font-size: 17px; font-weight: 700; color: var(--primary-brand); }
+  .header-sub { font-size: 11px; color: var(--medium-text); display: flex; align-items: center; gap: 5px; }
+  .status-dot { width: 7px; height: 7px; background: var(--success-green); border-radius: 50%; }
 
-  .logo-container {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .restart-btn { background: none; border: none; color: var(--medium-text); cursor: pointer; padding: 8px; border-radius: 50%; }
 
-  .header-title { font-size: 17px; font-weight: 700; color: var(--primary-brand); letter-spacing: -0.3px; }
-  .header-sub { font-size: 11px; color: var(--medium-text); display: flex; align-items: center; gap: 5px; font-weight: 500; }
-  
-  .status-dot {
-    width: 7px; height: 7px; background: var(--success-green);
-    border-radius: 50%; box-shadow: 0 0 8px var(--success-green);
-  }
-
-  .restart-btn {
-    background: none; border: none; color: var(--medium-text);
-    cursor: pointer; padding: 8px; border-radius: 50%; transition: 0.2s;
-  }
-  .restart-btn:hover { background: var(--brand-beige); color: var(--primary-brand); }
-
-  /* --- Chat Area --- */
   .chat-window {
     flex: 1; overflow-y: auto; padding: 25px 20px;
     display: flex; flex-direction: column; gap: 20px;
@@ -80,53 +61,27 @@
 
   .message {
     padding: 14px 18px; border-radius: 20px; font-size: 14.5px;
-    line-height: 1.6; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    line-height: 1.6; max-width: 80%;
   }
 
-  .message.user {
-    background: var(--primary-brand); color: white;
-    border-bottom-right-radius: 4px;
-  }
+  .message.user { background: var(--primary-brand); color: white; border-bottom-right-radius: 4px; }
+  .message.bot { background: var(--bubble-bot); color: var(--dark-text); border: 1px solid var(--border-soft); border-bottom-left-radius: 4px; }
 
-  .message.bot {
-    background: var(--brand-cream); color: var(--dark-text);
-    border: 1px solid var(--border-soft);
-    border-bottom-left-radius: 4px;
-  }
+  .bot-label { font-size: 10px; font-weight: 800; color: var(--primary-brand); text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+  .message-time { font-size: 10px; color: var(--medium-text); margin-top: 5px; }
 
-  .bot-label {
-    font-size: 10px; font-weight: 800; color: var(--primary-brand);
-    text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
-  }
-
-  .message-time { font-size: 10px; color: var(--medium-text); margin-top: 5px; padding: 0 5px; }
-
-  /* --- Footer & Input --- */
-  .footer-container {
-    background: var(--brand-cream);
-    padding: 15px 20px 25px 20px;
-    border-top: 1px solid var(--border-soft);
-  }
-
-  .quick-replies { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-  .quick-replies::-webkit-scrollbar { display: none; }
-
-  .qr-btn {
-    background: transparent; border: 1.5px solid var(--primary-brand);
-    color: var(--primary-brand); padding: 7px 15px; border-radius: 25px;
-    font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.2s;
-  }
-  .qr-btn:hover { background: var(--primary-brand); color: white; }
+  .footer-container { background: var(--brand-cream); padding: 15px 20px 25px 20px; border-top: 1px solid var(--border-soft); }
+  .quick-replies { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; }
+  .qr-btn { background: transparent; border: 1.5px solid var(--primary-brand); color: var(--primary-brand); padding: 7px 15px; border-radius: 25px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 
   .input-wrapper { display: flex; align-items: center; gap: 12px; position: relative; }
-  
   .input-wrapper input {
     flex: 1; padding: 14px 60px 14px 20px; border-radius: 30px;
-    border: 1px solid var(--border-soft); background: var(--brand-beige);
-    outline: none; font-family: inherit; font-size: 14px; color: var(--dark-text);
+    border: 1px solid var(--border-soft); background: var(--bubble-bot);
+    outline: none; font-size: 14px;
   }
-  .input-wrapper input:focus { background: white; border-color: var(--primary-brand); }
 
+  /* LEAF SEND BUTTON */
   .send-leaf-btn {
     position: absolute; right: 6px;
     background: var(--primary-brand); color: white;
@@ -139,8 +94,6 @@
   .send-leaf-btn svg { fill: white; width: 20px; height: 20px; }
 
   .powered-by { text-align: center; font-size: 9px; color: var(--medium-text); margin-top: 15px; letter-spacing: 1.5px; font-weight: 600; }
-
-  @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -164,7 +117,7 @@
       <div class="header-sub"><span class="status-dot"></span> Online | Expert Assistant</div>
     </div>
   </div>
-  <button class="restart-btn" id="restart-btn" title="Clear Chat">
+  <button class="restart-btn" id="restart-btn">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
   </button>
 </div>
@@ -174,20 +127,23 @@
 <div class="footer-container">
   <div class="quick-replies" id="quick-replies"></div>
   <div class="input-wrapper">
-    <input type="text" id="input" placeholder="Ask us anything..." autocomplete="off">
+    <input type="text" id="input" placeholder="Type your message..." autocomplete="off">
     <button class="send-leaf-btn" id="send-btn">
-        <svg viewBox="0 0 24 24"><path d="M17,8C15.52,8 14.15,8.6 13.13,9.57C15.07,9.1 17,9.63 18.23,10.86C20.18,12.81 20.18,15.97 18.23,17.92C16.28,19.87 13.12,19.87 11.17,17.92C9.94,16.69 9.41,14.76 9.88,12.82C8.91,13.85 8.31,15.21 8.31,16.69C8.31,19.62 10.69,22 13.62,22C14.88,22 16.03,21.56 16.94,20.81L19,22.88L20.41,21.47L18.34,19.4C19.38,18.17 20,16.59 20,14.84C20,11.06 16.94,8 13.16,8H17V8Z M11,2H7L12.06,7.06C9.03,8.08 7,10.92 7,14.24C7,14.83 7.06,15.41 7.18,15.97L2,10.78V10.78V2H11Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-7 7c-1.18 0-2.34-.38-3.39-1.02L11 20z"></path></svg>
     </button>
   </div>
   <div class="powered-by">POWERED BY SQU</div>
 </div>
 
 <script>
+// --- URL Parameters and Fallback ---
+const params = new URLSearchParams(window.location.search);
+const productId = params.get('product') || 'apricot_01';
+
 const CONFIG = {
   bot: "Juçaí Assistant",
   webhook: "https://n8n.srv1208833.hstgr.cloud/webhook/jucai-chat",
-  defaultId: "JUC-001",
-  welcomeProduct: "Hello! I'm your Juçaí expert. I see you're interested in our organic sorbets. How can I help you today?",
+  welcome: "Hello! I'm your Juçaí expert. I'm here to help you with our organic products and sustainability mission!",
   questions: ["Our Ingredients", "Is it 100% Organic?", "Sustainability Mission", "Find Store"]
 };
 
@@ -195,19 +151,13 @@ let chatId = 'web_' + Math.random().toString(36).substr(2, 9);
 const chat = document.getElementById('chat');
 const input = document.getElementById('input');
 
-// URL Parameter Logic - If no 'product' in URL, it uses JUC-001
-const params = new URLSearchParams(window.location.search);
-const activeProductId = params.get('product') || CONFIG.defaultId;
-
 function addMsg(text, type) {
   const wrapper = document.createElement('div');
   wrapper.className = `message-wrapper ${type}`;
   const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   
-  const botIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-7 7c-1.18 0-2.34-.38-3.39-1.02L11 20z"></path></svg>`;
-
   wrapper.innerHTML = `
-    ${type === 'bot' ? `<div class="bot-label">${botIcon}${CONFIG.bot}</div>` : ''}
+    ${type === 'bot' ? `<div class="bot-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-7 7c-1.18 0-2.34-.38-3.39-1.02L11 20z"></path></svg>${CONFIG.bot}</div>` : ''}
     <div class="message ${type}">${text}</div>
     <div class="message-time">${time}</div>
   `;
@@ -219,12 +169,7 @@ function showTyping() {
   const div = document.createElement('div');
   div.id = 'typing';
   div.className = 'message-wrapper bot';
-  div.innerHTML = `
-    <div class="message bot" style="display:flex; gap:4px; padding:12px 18px;">
-        <span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out"></span>
-        <span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out; animation-delay:0.2s"></span>
-        <span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out; animation-delay:0.4s"></span>
-    </div>`;
+  div.innerHTML = `<div class="message bot" style="display:flex; gap:4px; padding:12px 18px;"><span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out"></span><span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out; animation-delay:0.2s"></span><span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out; animation-delay:0.4s"></span></div>`;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
@@ -242,14 +187,11 @@ async function handleSend(textOverride) {
     const res = await fetch(CONFIG.webhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        message: text, 
-        chatId: chatId,
-        productId: activeProductId // Always sends an ID (default or URL)
-      })
+      // Exact structure from your past code
+      body: JSON.stringify({ message: text, productId, chatId })
     });
     const data = await res.json();
-    if(document.getElementById('typing')) document.getElementById('typing').remove();
+    document.getElementById('typing').remove();
     addMsg(data.reply || "I'm having a little trouble connecting. Please try again!", 'bot');
   } catch(e) {
     if(document.getElementById('typing')) document.getElementById('typing').remove();
@@ -259,9 +201,7 @@ async function handleSend(textOverride) {
 
 function init() {
   chat.innerHTML = '';
-  // Greets with product-focused welcome since we now always have an ID
-  addMsg(CONFIG.welcomeProduct, 'bot');
-  
+  addMsg(CONFIG.welcome, 'bot');
   const qr = document.getElementById('quick-replies');
   qr.innerHTML = '';
   qr.style.display = 'flex';
@@ -276,12 +216,14 @@ function init() {
 
 document.getElementById('send-btn').onclick = () => handleSend();
 input.onkeypress = e => { if(e.key === 'Enter') handleSend(); };
-document.getElementById('restart-btn').onclick = () => { 
-  chatId = 'web_' + Math.random().toString(36).substr(2, 9); 
-  init(); 
-};
+document.getElementById('restart-btn').onclick = () => { chatId = 'web_' + Math.random().toString(36).substr(2, 9); init(); };
 
 init();
 </script>
+
+<style>
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+</style>
+
 </body>
 </html>
