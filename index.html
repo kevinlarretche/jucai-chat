@@ -10,9 +10,8 @@
   :root {
     --primary-brand: #602750;       /* Juçaí Berry Purple */
     --primary-hover: #4A1D3D;
-    --brand-beige: #F5F2ED;         /* Organic Beige Background */
-    --brand-cream: #FFFFFF;         /* Pure white for containers */
-    --bubble-bot: #FFFFFF;          
+    --brand-beige: #F5F2ED;         /* Signature Organic Beige Background */
+    --brand-cream: #FFFFFF;         
     --dark-text: #2C1826;           
     --medium-text: #8E7C88;
     --border-soft: rgba(96, 39, 80, 0.1);
@@ -187,8 +186,8 @@
 const CONFIG = {
   bot: "Juçaí Assistant",
   webhook: "https://n8n.srv1208833.hstgr.cloud/webhook/jucai-chat",
-  welcomeProduct: "Hello! I see you're interested in our organic sorbets. I'm your Juçaí expert—how can I help you today?",
-  welcomeGeneric: "Welcome to Juçaí! We're here to share the magic of the Atlantic Forest. How can we help you explore our organic world today?",
+  defaultId: "JUC-001",
+  welcomeProduct: "Hello! I'm your Juçaí expert. I see you're interested in our organic sorbets. How can I help you today?",
   questions: ["Our Ingredients", "Is it 100% Organic?", "Sustainability Mission", "Find Store"]
 };
 
@@ -196,9 +195,9 @@ let chatId = 'web_' + Math.random().toString(36).substr(2, 9);
 const chat = document.getElementById('chat');
 const input = document.getElementById('input');
 
-// URL Parameter Logic
+// URL Parameter Logic - If no 'product' in URL, it uses JUC-001
 const params = new URLSearchParams(window.location.search);
-const activeProductId = params.get('product');
+const activeProductId = params.get('product') || CONFIG.defaultId;
 
 function addMsg(text, type) {
   const wrapper = document.createElement('div');
@@ -246,7 +245,7 @@ async function handleSend(textOverride) {
       body: JSON.stringify({ 
         message: text, 
         chatId: chatId,
-        productId: activeProductId || "GENERAL_QUERY" 
+        productId: activeProductId // Always sends an ID (default or URL)
       })
     });
     const data = await res.json();
@@ -260,9 +259,8 @@ async function handleSend(textOverride) {
 
 function init() {
   chat.innerHTML = '';
-  // Logic to switch welcome message
-  const welcomeText = activeProductId ? CONFIG.welcomeProduct : CONFIG.welcomeGeneric;
-  addMsg(welcomeText, 'bot');
+  // Greets with product-focused welcome since we now always have an ID
+  addMsg(CONFIG.welcomeProduct, 'bot');
   
   const qr = document.getElementById('quick-replies');
   qr.innerHTML = '';
