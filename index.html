@@ -9,20 +9,21 @@
   :root {
     --primary-brand: #602750;
     --primary-hover: #4A1D3D;
-    --brand-bg: #FFFFFF;            /* Clean white background from website */
+    --brand-bg: #FFFFFF;
     --brand-cream: #FFFFFF;
-    --bubble-bot: #F7F5F2;          /* Soft contrast for bot messages */
+    --bubble-bot: #F7F5F2;
     --dark-text: #2C1826;
     --medium-text: #8E7C88;
     --border-soft: rgba(96, 39, 80, 0.15);
     --success-green: #2ECC71;
+    --card-shadow: 0 2px 16px rgba(96,39,80,0.10);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--brand-bg); 
+    background-color: var(--brand-bg);
     color: var(--dark-text);
     display: flex;
     flex-direction: column;
@@ -30,6 +31,7 @@
     overflow: hidden;
   }
 
+  /* HEADER */
   .header {
     background: var(--brand-cream);
     border-bottom: 1px solid var(--border-soft);
@@ -39,15 +41,21 @@
     justify-content: space-between;
     z-index: 10;
   }
-
   .header-left { display: flex; align-items: center; gap: 12px; }
   .logo-container { width: 48px; height: 48px; }
   .header-title { font-size: 17px; font-weight: 700; color: var(--primary-brand); }
   .header-sub { font-size: 11px; color: var(--medium-text); display: flex; align-items: center; gap: 5px; }
   .status-dot { width: 7px; height: 7px; background: var(--success-green); border-radius: 50%; }
 
-  .restart-btn { background: none; border: none; color: var(--medium-text); cursor: pointer; padding: 8px; border-radius: 50%; }
+  .header-actions { display: flex; align-items: center; gap: 6px; }
+  .icon-btn { background: none; border: none; color: var(--medium-text); cursor: pointer; padding: 8px; border-radius: 50%; transition: background 0.2s; }
+  .icon-btn:hover { background: rgba(96,39,80,0.07); }
+  .icon-btn svg { display: block; }
 
+  /* SOUND TOGGLE */
+  .sound-on { color: var(--primary-brand); }
+
+  /* CHAT WINDOW */
   .chat-window {
     flex: 1; overflow-y: auto; padding: 25px 20px;
     display: flex; flex-direction: column; gap: 20px;
@@ -63,25 +71,102 @@
     padding: 14px 18px; border-radius: 20px; font-size: 14.5px;
     line-height: 1.6; max-width: 80%;
   }
-
   .message.user { background: var(--primary-brand); color: white; border-bottom-right-radius: 4px; }
   .message.bot { background: var(--bubble-bot); color: var(--dark-text); border: 1px solid var(--border-soft); border-bottom-left-radius: 4px; }
+
+  /* MARKDOWN STYLES inside bot messages */
+  .message.bot strong { font-weight: 700; }
+  .message.bot em { font-style: italic; }
+  .message.bot ul { padding-left: 18px; margin: 6px 0; }
+  .message.bot ol { padding-left: 18px; margin: 6px 0; }
+  .message.bot li { margin: 3px 0; }
+  .message.bot a { color: var(--primary-brand); text-decoration: underline; }
+  .message.bot code { background: rgba(96,39,80,0.08); padding: 1px 5px; border-radius: 4px; font-size: 13px; font-family: monospace; }
+  .message.bot p { margin-bottom: 6px; }
+  .message.bot p:last-child { margin-bottom: 0; }
+  .message.bot h3 { font-size: 14px; font-weight: 700; margin: 8px 0 4px 0; }
 
   .bot-label { font-size: 10px; font-weight: 800; color: var(--primary-brand); text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
   .message-time { font-size: 10px; color: var(--medium-text); margin-top: 5px; }
 
+  /* PRODUCT CARD */
+  .product-card {
+    background: white;
+    border: 1px solid var(--border-soft);
+    border-radius: 18px;
+    overflow: hidden;
+    max-width: 240px;
+    margin-top: 10px;
+    box-shadow: var(--card-shadow);
+    animation: fadeIn 0.4s ease;
+  }
+  .product-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+  }
+  .product-card-body { padding: 12px 14px 14px 14px; }
+  .product-card-name { font-size: 13px; font-weight: 700; color: var(--dark-text); line-height: 1.3; }
+  .product-card-price { font-size: 17px; font-weight: 900; color: var(--primary-brand); margin: 5px 0 12px 0; }
+  .product-card-btn {
+    display: block;
+    background: var(--primary-brand);
+    color: white;
+    text-align: center;
+    padding: 9px 14px;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: background 0.2s;
+  }
+  .product-card-btn:hover { background: var(--primary-hover); }
+
+  /* RATING */
+  .rating-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 6px;
+    animation: fadeIn 0.4s ease;
+  }
+  .rating-label { font-size: 11px; color: var(--medium-text); margin-bottom: 8px; font-weight: 600; }
+  .rating-buttons { display: flex; gap: 8px; }
+  .rating-btn {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 25px;
+    padding: 6px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--medium-text);
+  }
+  .rating-btn:hover { border-color: var(--primary-brand); color: var(--primary-brand); }
+  .rating-btn.selected-good { background: #e8f8f0; border-color: #2ECC71; color: #1a9a54; }
+  .rating-btn.selected-bad { background: #fde8ef; border-color: #e74c6a; color: #c0304e; }
+  .rating-thanks { font-size: 12px; color: var(--medium-text); font-style: italic; margin-top: 4px; }
+
+  /* FOOTER */
   .footer-container { background: var(--brand-cream); padding: 15px 20px 25px 20px; border-top: 1px solid var(--border-soft); }
   .quick-replies { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; }
-  .qr-btn { background: transparent; border: 1.5px solid var(--primary-brand); color: var(--primary-brand); padding: 7px 15px; border-radius: 25px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .qr-btn { background: transparent; border: 1.5px solid var(--primary-brand); color: var(--primary-brand); padding: 7px 15px; border-radius: 25px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Poppins', sans-serif; transition: all 0.2s; }
+  .qr-btn:hover { background: var(--primary-brand); color: white; }
 
   .input-wrapper { display: flex; align-items: center; gap: 12px; position: relative; }
   .input-wrapper input {
     flex: 1; padding: 14px 60px 14px 20px; border-radius: 30px;
     border: 1px solid var(--border-soft); background: var(--bubble-bot);
-    outline: none; font-size: 14px;
+    outline: none; font-size: 14px; font-family: 'Poppins', sans-serif;
+    transition: border-color 0.2s;
   }
+  .input-wrapper input:focus { border-color: rgba(96,39,80,0.4); }
 
-  /* LEAF SEND BUTTON */
   .send-leaf-btn {
     position: absolute; right: 6px;
     background: var(--primary-brand); color: white;
@@ -94,6 +179,8 @@
   .send-leaf-btn svg { fill: white; width: 20px; height: 20px; }
 
   .powered-by { text-align: center; font-size: 9px; color: var(--medium-text); margin-top: 15px; letter-spacing: 1.5px; font-weight: 600; }
+
+  @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -101,7 +188,7 @@
 <div class="header">
   <div class="header-left">
     <div class="logo-container">
-      <svg version="1.1" viewBox="0 0 252.3 252.3" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+      <svg version="1.1" viewBox="0 0 252.3 252.3" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
         <g>
           <path fill="#602750" d="M126.1,252.3c-33.7,0-65.4-13.1-89.2-36.9C13.1,191.5,0,159.8,0,126.1c0-33.7,13.1-65.4,36.9-89.2 C60.8,13.1,92.4,0,126.1,0c33.7,0,65.4,13.1,89.2,36.9c23.8,23.8,36.9,55.5,36.9,89.2c0,33.7-13.1,65.4-36.9,89.2 C191.5,239.2,159.8,252.3,126.1,252.3z"/>
           <path fill="#FFFFFF" d="M169.3,107.8c-4.4,5.5-6.8,14.6-11.3,21.2c-2.9,4.2-6.7,7.4-12.4,8c-8.4,0-15.2-6.8-15.2-15.2 c0-8.4,6.8-15.2,15.2-15.2c3.5,0,6.8,1.2,9.5,3.3l6.2-8.9c-4.5-3.4-10-5.3-15.7-5.3c-14.3,0-26,11.7-26,26c0,13.2,9.8,24,22.5,25.8 l2.4,0.2l-3.8,8.9c0,0,22.4-5.9,27.9-23.1c4.1,8.2,12.6,13.8,22.3,13.8c6.3,0,12-2.3,16.4-6.1c1.2,1,4.9,4,8.7,4.8V97.3 c-0.3,0-25,0-25,0C181.5,97.3,174,101.2,169.3,107.8z M203.8,108.2v14.2c0,7.8-6.4,14.1-14.2,14.1s-14.2-6.3-14.2-14.2 s6.4-14.2,14.2-14.2c0.2,0,0.4,0,0.5,0H203.8z"/>
@@ -117,9 +204,18 @@
       <div class="header-sub"><span class="status-dot"></span> Online | Expert Assistant</div>
     </div>
   </div>
-  <button class="restart-btn" id="restart-btn">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-  </button>
+  <div class="header-actions">
+    <button class="icon-btn" id="sound-btn" title="Toggle sound">
+      <svg id="sound-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      </svg>
+    </button>
+    <button class="icon-btn" id="restart-btn" title="New conversation">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+    </button>
+  </div>
 </div>
 
 <div class="chat-window" id="chat"></div>
@@ -136,7 +232,6 @@
 </div>
 
 <script>
-// --- URL Parameters and Fallback ---
 const params = new URLSearchParams(window.location.search);
 const productId = params.get('product') || 'JUC-001';
 
@@ -148,38 +243,189 @@ const CONFIG = {
 };
 
 let chatId = 'web_' + Math.random().toString(36).substr(2, 9);
+let soundEnabled = true;
+let messageCount = 0;
+
 const chat = document.getElementById('chat');
 const input = document.getElementById('input');
 
-function addMsg(text, type) {
+// ── SOUND ──────────────────────────────────────────────
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+function playPing() {
+  if (!soundEnabled || !AudioContext) return;
+  try {
+    const ctx = new AudioContext();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine';
+    o.frequency.setValueAtTime(880, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(660, ctx.currentTime + 0.15);
+    g.gain.setValueAtTime(0.15, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    o.start(ctx.currentTime);
+    o.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+document.getElementById('sound-btn').onclick = () => {
+  soundEnabled = !soundEnabled;
+  const icon = document.getElementById('sound-icon');
+  if (soundEnabled) {
+    icon.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+    document.getElementById('sound-btn').classList.remove('sound-on');
+  } else {
+    icon.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>`;
+    document.getElementById('sound-btn').classList.add('sound-on');
+  }
+};
+
+// ── MARKDOWN PARSER ────────────────────────────────────
+function parseMarkdown(text) {
+  let html = text
+    // Escape HTML first
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Inline code
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // Links [text](url)
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+  // Auto-detect bare URLs (not already inside an href)
+  html = html.replace(/(?<!href=")(https?:\/\/[^\s<"]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+
+  // Unordered lists
+  html = html.replace(/^[\*\-] (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+
+  // Ordered lists
+  html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+
+  // H3
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+
+  // Paragraphs — wrap lines that aren't already block-level tags
+  const lines = html.split('\n');
+  const processed = lines.map(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return '';
+    if (/^<(ul|ol|li|h[1-6]|p)/.test(trimmed)) return trimmed;
+    return `<p>${trimmed}</p>`;
+  });
+  return processed.filter(Boolean).join('\n');
+}
+
+// ── PRODUCT CARD ───────────────────────────────────────
+function buildProductCard(card) {
+  const div = document.createElement('div');
+  div.className = 'product-card';
+  div.innerHTML = `
+    <img src="${card.image}" alt="${card.name}" onerror="this.style.display='none'">
+    <div class="product-card-body">
+      <div class="product-card-name">${card.name}</div>
+      <div class="product-card-price">${card.price}</div>
+      <a href="${card.url}" target="_blank" rel="noopener" class="product-card-btn">View Product →</a>
+    </div>
+  `;
+  return div;
+}
+
+// ── RATING ─────────────────────────────────────────────
+function buildRating() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'rating-wrapper';
+  wrapper.innerHTML = `
+    <div class="rating-label">Was this helpful?</div>
+    <div class="rating-buttons">
+      <button class="rating-btn" id="rate-good">👍 Yes</button>
+      <button class="rating-btn" id="rate-bad">👎 No</button>
+    </div>
+  `;
+  const good = wrapper.querySelector('#rate-good');
+  const bad = wrapper.querySelector('#rate-bad');
+
+  function select(type) {
+    good.classList.remove('selected-good', 'selected-bad');
+    bad.classList.remove('selected-good', 'selected-bad');
+    good.disabled = true; bad.disabled = true;
+    if (type === 'good') good.classList.add('selected-good');
+    else bad.classList.add('selected-bad');
+    const thanks = document.createElement('div');
+    thanks.className = 'rating-thanks';
+    thanks.textContent = type === 'good' ? 'Great, glad I could help!' : 'Thanks for the feedback — I\'ll try to do better.';
+    wrapper.appendChild(thanks);
+    // Could send rating to webhook here
+    fetch(CONFIG.webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'rating', rating: type, chatId, productId })
+    }).catch(() => {});
+  }
+
+  good.onclick = () => select('good');
+  bad.onclick = () => select('bad');
+  return wrapper;
+}
+
+// ── ADD MESSAGE ────────────────────────────────────────
+function addMsg(text, type, card = null, showRating = false) {
+  messageCount++;
   const wrapper = document.createElement('div');
   wrapper.className = `message-wrapper ${type}`;
   const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
-  wrapper.innerHTML = `
-    ${type === 'bot' ? `<div class="bot-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-7 7c-1.18 0-2.34-.38-3.39-1.02L11 20z"></path></svg>${CONFIG.bot}</div>` : ''}
-    <div class="message ${type}">${text}</div>
-    <div class="message-time">${time}</div>
-  `;
+
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `message ${type}`;
+
+  if (type === 'bot') {
+    msgDiv.innerHTML = parseMarkdown(text);
+  } else {
+    msgDiv.textContent = text;
+  }
+
+  if (type === 'bot') {
+    const label = document.createElement('div');
+    label.className = 'bot-label';
+    label.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-7 7c-1.18 0-2.34-.38-3.39-1.02L11 20z"></path></svg>${CONFIG.bot}`;
+    wrapper.appendChild(label);
+  }
+
+  wrapper.appendChild(msgDiv);
+
+  if (card) wrapper.appendChild(buildProductCard(card));
+  if (showRating) wrapper.appendChild(buildRating());
+
+  const timeDiv = document.createElement('div');
+  timeDiv.className = 'message-time';
+  timeDiv.textContent = time;
+  wrapper.appendChild(timeDiv);
+
   chat.appendChild(wrapper);
   chat.scrollTop = chat.scrollHeight;
+
+  if (type === 'bot') playPing();
 }
 
+// ── TYPING INDICATOR ───────────────────────────────────
 function showTyping() {
   const div = document.createElement('div');
   div.id = 'typing';
   div.className = 'message-wrapper bot';
-  div.innerHTML = `<div class="message bot" style="display:flex; gap:4px; padding:12px 18px;"><span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out"></span><span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out; animation-delay:0.2s"></span><span style="width:6px; height:6px; background:#602750; border-radius:50%; animation:bounce 1.4s infinite ease-in-out; animation-delay:0.4s"></span></div>`;
+  div.innerHTML = `<div class="message bot" style="display:flex;gap:4px;padding:12px 18px"><span style="width:6px;height:6px;background:#602750;border-radius:50%;animation:bounce 1.4s infinite ease-in-out"></span><span style="width:6px;height:6px;background:#602750;border-radius:50%;animation:bounce 1.4s infinite ease-in-out;animation-delay:0.2s"></span><span style="width:6px;height:6px;background:#602750;border-radius:50%;animation:bounce 1.4s infinite ease-in-out;animation-delay:0.4s"></span></div>`;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
+// ── SEND ───────────────────────────────────────────────
 async function handleSend(textOverride) {
   const text = textOverride || input.value.trim();
   if (!text) return;
   input.value = '';
   document.getElementById('quick-replies').style.display = 'none';
-  
+
   addMsg(text, 'user');
   showTyping();
 
@@ -187,20 +433,30 @@ async function handleSend(textOverride) {
     const res = await fetch(CONFIG.webhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      // Exact structure from your past code
       body: JSON.stringify({ message: text, productId, chatId })
     });
     const data = await res.json();
-    document.getElementById('typing').remove();
-    addMsg(data.reply || "I'm having a little trouble connecting. Please try again!", 'bot');
+    if (document.getElementById('typing')) document.getElementById('typing').remove();
+
+    // Show rating after every 3rd bot message
+    const showRating = messageCount > 0 && messageCount % 3 === 0;
+
+    addMsg(
+      data.reply || "I'm having a little trouble connecting. Please try again!",
+      'bot',
+      data.product_card || null,
+      showRating
+    );
   } catch(e) {
-    if(document.getElementById('typing')) document.getElementById('typing').remove();
+    if (document.getElementById('typing')) document.getElementById('typing').remove();
     addMsg("I couldn't reach the server. Please check your connection.", 'bot');
   }
 }
 
+// ── INIT ───────────────────────────────────────────────
 function init() {
   chat.innerHTML = '';
+  messageCount = 0;
   addMsg(CONFIG.welcome, 'bot');
   const qr = document.getElementById('quick-replies');
   qr.innerHTML = '';
@@ -215,8 +471,11 @@ function init() {
 }
 
 document.getElementById('send-btn').onclick = () => handleSend();
-input.onkeypress = e => { if(e.key === 'Enter') handleSend(); };
-document.getElementById('restart-btn').onclick = () => { chatId = 'web_' + Math.random().toString(36).substr(2, 9); init(); };
+input.onkeypress = e => { if (e.key === 'Enter') handleSend(); };
+document.getElementById('restart-btn').onclick = () => {
+  chatId = 'web_' + Math.random().toString(36).substr(2, 9);
+  init();
+};
 
 init();
 </script>
